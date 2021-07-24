@@ -1,9 +1,12 @@
 $primary: #d4ecf1;
 $secondary: #edf6f6;
-$danger: #e49c9c;
+$danger: #ebbbbb;
 $info: #fdf9f9;
 $success: #e3dcdc;
-$warning: #999999;
+$warning: #a5a5a5;
+
+$input-placeholder-color: rgb(202, 202, 202);
+$accordion-icon-width: 0rem;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 

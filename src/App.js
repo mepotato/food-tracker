@@ -2,89 +2,90 @@ import { useState } from "react";
 import AddItemForm from "./components/AddItemForm";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import ItemList from "./components/ItemList";
+import InventoryList from "./components/InventoryList";
+import BuyList from "./components/BuyList";
 
 const App = () => {
-  const [ownedInfo, setOwnedInfo] = useState([
+  const [inventoryInfo, setInventoryInfo] = useState([
     {
-      itemName: "a item owned",
-      expiryDate: "1-1-22",
-      itemType: "food",
-      quantity: "2",
-      quantityUnits: "boxes",
-      imageLink: "google.com",
-      whichList: "Owned Items",
-      checked: false,
-      id: 1,
+      id: Math.random(),
+      title: "a item owned",
+      quantity: "4",
+      location: "outside refridgerator",
+      tags: "food",
+      date: "1-1-22",
+      image: "google.com",
+      description:
+        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
+      whichList: "Inventory",
     },
     {
-      itemName: "b item owned",
-      expiryDate: "2-2-23",
-      itemType: "drink",
+      id: Math.random(),
+      title: "b item owned",
       quantity: "2",
-      quantityUnits: "boxes",
-      imageLink: "google.com",
-      whichList: "Owned Items",
-      checked: false,
-      id: 2,
+      location: "inside refridgerator",
+      tags: "drink",
+      date: "2-2-33",
+      image: "google.com",
+      description:
+        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
+      whichList: "Inventory",
     },
     {
-      itemName: "c item owned",
-      expiryDate: "3-3-24",
-      itemType: "ramen",
-      quantity: "2",
-      quantityUnits: "boxes",
-      imageLink: "google.com",
-      whichList: "Owned Items",
-      checked: false,
-      id: 3,
+      id: Math.random(),
+      title: "c item owned",
+      quantity: "3",
+      location: "kitchen table",
+      tags: "ramen",
+      date: "3-3-44",
+      image: "google.com",
+      description:
+        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
+      whichList: "Inventory",
     },
   ]);
 
   const [buyInfo, setBuyInfo] = useState([
     {
-      itemName: "a item to buy",
-      expiryDate: "1-1-22",
-      itemType: "ramen",
-      whoRequested: "asdf",
-      whereToBuy: "safeway",
-      quantity: "2",
-      quantityUnits: "boxes",
-      imageLink: "google.com",
-      whichList: "Items to Buy",
-      checked: false,
-      id: 4,
+      id: Math.random(),
+      title: "a item owned",
+      quantity: "4",
+      location: "Walmart",
+      tags: "ramen",
+      person: "Nicole",
+      image: "google.com",
+      description:
+        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
+      whichList: "Inventory",
     },
     {
-      itemName: "b item to buy",
-      expiryDate: "2-2-23",
-      itemType: "food",
-      whoRequested: "asdf",
-      whereToBuy: "safeway",
+      id: Math.random(),
+      title: "b item owned",
       quantity: "2",
-      quantityUnits: "boxes",
-      imageLink: "google.com",
-      whichList: "Items to Buy",
-      checked: false,
-      id: 5,
+      location: "Safeway",
+      tags: "food",
+      person: "Michelle",
+      image: "google.com",
+      description:
+        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
+      whichList: "Inventory",
     },
     {
-      itemName: "c item to buy",
-      expiryDate: "3-3-24",
-      itemType: "drink",
-      whoRequested: "asdf",
-      whereToBuy: "safeway",
-      quantity: "2",
-      quantityUnits: "boxes",
-      imageLink: "google.com",
-      whichList: "Items to Buy",
-      checked: false,
-      id: 6,
+      id: Math.random(),
+      title: "c item owned",
+      quantity: "3",
+      location: "Costco",
+      tags: "drink",
+      person: "Jacky",
+      image: "google.com",
+      description:
+        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
+      whichList: "Inventory",
     },
   ]);
 
-  const addOwnedItem = (item) => {
-    setOwnedInfo([...ownedInfo, item]);
+  const addInventoryItem = (item) => {
+    setInventoryInfo([...inventoryInfo, item]);
   };
 
   const addBuyItem = (item) => {
@@ -97,16 +98,18 @@ const App = () => {
     <div>
       <div className="sticky-top">
         <Header />
-        <AddItemForm addOwnedItem={addOwnedItem} addBuyItem={addBuyItem} />
+        <AddItemForm
+          addInventoryItem={addInventoryItem}
+          addBuyItem={addBuyItem}
+        />
       </div>
       <div className="row line-split">
-        <ItemList
-          rows={ownedInfo}
-          setRows={setOwnedInfo}
-          // handleCheckbox={handleCheckbox}
-          title="Items Owned"
+        <InventoryList
+          rows={inventoryInfo}
+          setRows={setInventoryInfo}
+          title="Inventory"
         />
-        <ItemList rows={buyInfo} setRows={setBuyInfo} title="Items to Buy" />
+        <BuyList rows={buyInfo} setRows={setBuyInfo} title="Items to Buy" />
       </div>
       <Footer />
     </div>
