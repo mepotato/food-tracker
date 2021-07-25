@@ -17,7 +17,6 @@ const App = () => {
       image: "google.com",
       description:
         "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-      whichList: "Inventory",
     },
     {
       id: Math.random(),
@@ -29,7 +28,6 @@ const App = () => {
       image: "google.com",
       description:
         "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-      whichList: "Inventory",
     },
     {
       id: Math.random(),
@@ -41,7 +39,6 @@ const App = () => {
       image: "google.com",
       description:
         "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-      whichList: "Inventory",
     },
   ]);
 
@@ -56,7 +53,6 @@ const App = () => {
       image: "google.com",
       description:
         "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-      whichList: "Inventory",
     },
     {
       id: Math.random(),
@@ -68,7 +64,6 @@ const App = () => {
       image: "google.com",
       description:
         "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-      whichList: "Inventory",
     },
     {
       id: Math.random(),
@@ -80,7 +75,6 @@ const App = () => {
       image: "google.com",
       description:
         "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-      whichList: "Inventory",
     },
   ]);
 
@@ -92,7 +86,19 @@ const App = () => {
     setBuyInfo([...buyInfo, item]);
   };
 
-  // const handleCheckbox = ()
+  const removeInvItem = (id) => {
+    const filteredRows = inventoryInfo.filter((row) => {
+      return row.id !== id;
+    });
+    setInventoryInfo(filteredRows);
+  };
+
+  const removeBuyItem = (id) => {
+    const filteredRows = buyInfo.filter((row) => {
+      return row.id !== id;
+    });
+    setBuyInfo(filteredRows);
+  };
 
   return (
     <div>
@@ -104,12 +110,8 @@ const App = () => {
         />
       </div>
       <div className="row line-split">
-        <InventoryList
-          rows={inventoryInfo}
-          setRows={setInventoryInfo}
-          title="Inventory"
-        />
-        <BuyList rows={buyInfo} setRows={setBuyInfo} title="Items to Buy" />
+        <InventoryList rows={inventoryInfo} remove={removeInvItem} />
+        <BuyList rows={buyInfo} remove={removeBuyItem} />
       </div>
       <Footer />
     </div>

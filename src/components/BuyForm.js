@@ -11,7 +11,6 @@ const BuyForm = ({ addBuyItem, list }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    if (!title) return;
     addBuyItem({
       id: Math.random(),
       title: title,
@@ -25,7 +24,7 @@ const BuyForm = ({ addBuyItem, list }) => {
   };
 
   return (
-    <form className="row gx-5">
+    <form id="form" className="row gx-5" onSubmit={handleClick}>
       <div className="col">
         <div className="d-flex border border-warning mb-4">
           <h5 className="addInfo p-2 mb-0 text-dark bg-white border-end border-1 border-warning">
@@ -135,7 +134,7 @@ const BuyForm = ({ addBuyItem, list }) => {
         <button
           type="submit"
           className="btn text-white bg-danger px-5"
-          onClick={handleClick}
+          form="form"
         >
           Submit
         </button>

@@ -1,17 +1,9 @@
 import InventoryItem from "./InventoryItem";
 
-const InventoryList = ({ rows, setRows, title }) => {
-  const remove = (id) => {
-    console.log(id);
-    const filteredRows = rows.filter((row) => {
-      return row.id !== id;
-    });
-    setRows(filteredRows);
-  };
-
+const InventoryList = ({ rows, remove }) => {
   return (
     <div className="col p-4 bg-white text-dark">
-      <h2>{title}:</h2>
+      <h2>Inventory:</h2>
       <div className="d-flex flex-column py-4 px-3 bg-white text-light w-100">
         <div className="border-top border-1">
           {rows.map((row, idx) => (
