@@ -30,24 +30,29 @@ const InventoryItem = ({ row, remove }) => {
               className="col accordion-button collapsed px-3"
               type="button"
               data-bs-toggle="collapse"
-              data-bs-target={`#test${row.id.toString().substring(2)}`}
+              data-bs-target={`#A${row.id.toString().substring(2)}`}
               aria-expanded="false"
               aria-controls="panelsStayOpen-collapseTwo"
             >
-              <h5 className="col grid-text text-dark">{row.title}</h5>
-              <h5 className="col-3 grid-text text-dark">{row.date}</h5>
+              <h5 className="col grid-text text-dark">
+                <strong>{row.title}</strong>
+              </h5>
+              <h5 className="col-4 grid-text text-dark">{row.date}</h5>
+
+              {/* {row.map((row.tags) => ( */}
               <h5
-                className={`col-3 grid-text text-dark rounded d-flex justify-content-center ${getColor(
+                className={`col-2 grid-text text-dark rounded d-flex justify-content-center ${getColor(
                   row.tags
                 )}`}
               >
                 {row.tags}
               </h5>
+              {/* ))} */}
             </button>
           </div>
         </h2>
         <div
-          id={`test${row.id.toString().substring(2)}`}
+          id={`A${row.id.toString().substring(2)}`}
           className="accordion-collapse collapse"
           aria-labelledby="panelsStayOpen-headingTwo"
         >

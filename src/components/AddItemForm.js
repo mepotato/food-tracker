@@ -2,7 +2,7 @@ import { useState } from "react";
 import InventoryForm from "./InventoryForm";
 import BuyForm from "./BuyForm";
 
-const AddItemForm = ({ addInventoryItem, addBuyItem }) => {
+const AddItemForm = () => {
   const [list, setList] = useState("Inventory");
 
   return (
@@ -47,12 +47,9 @@ const AddItemForm = ({ addInventoryItem, addBuyItem }) => {
         >
           <div className="accordion-body p-4 container-fluid m-0 add-item-form bg-info border-success">
             {list === "Inventory" ? (
-              <InventoryForm
-                addInventoryItem={addInventoryItem}
-                list={list}
-              ></InventoryForm>
+              <InventoryForm></InventoryForm>
             ) : (
-              <BuyForm addBuyItem={addBuyItem} list={list}></BuyForm>
+              <BuyForm></BuyForm>
             )}
           </div>
         </div>

@@ -1,26 +1,40 @@
 import { useState } from "react";
+import firebase from "firebase/app";
 
-const InventoryForm = ({ addInventoryItem, list }) => {
+const InventoryForm = () => {
   const [title, setTitle] = useState("");
-  const [quantity, setQuantity] = useState("n/a");
-  const [location, setLocation] = useState("n/a");
-  const [tags, setTags] = useState("n/a");
-  const [date, setDate] = useState("n/a");
-  const [image, setImage] = useState("n/a");
-  const [description, setDescription] = useState("n/a");
+  const [quantity, setQuantity] = useState(0);
+  const [location, setLocation] = useState("");
+  const [tags, setTags] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleClick = (e) => {
     e.preventDefault();
-    addInventoryItem({
-      id: Math.random(),
-      title: title,
-      quantity: quantity,
-      location: location,
-      tags: tags,
-      date: date,
-      imageLink: image,
-      description: description,
-    });
+
+    firebase
+      .firestore()
+      .collection("InventoryList")
+      .add({
+        title,
+        quantity,
+        location,
+        tags: [tags],
+        date: new Date(date),
+        imageLink: image,
+        description,
+      })
+
+      .then(() => {
+        setTitle("");
+        setDate(new Date());
+        setQuantity(0);
+        setLocation("");
+        setTags("");
+        setImage("");
+        setDescription("");
+      });
   };
 
   return (
@@ -37,6 +51,7 @@ const InventoryForm = ({ addInventoryItem, list }) => {
             onChange={(e) => {
               setTitle(e.target.value);
             }}
+            value={title}
             required
           />
         </div>
@@ -52,6 +67,7 @@ const InventoryForm = ({ addInventoryItem, list }) => {
             onChange={(e) => {
               setQuantity(e.target.value);
             }}
+            value={quantity}
           />
         </div>
 
@@ -66,6 +82,7 @@ const InventoryForm = ({ addInventoryItem, list }) => {
             onChange={(e) => {
               setLocation(e.target.value);
             }}
+            value={location}
           />
         </div>
       </div>
@@ -82,6 +99,7 @@ const InventoryForm = ({ addInventoryItem, list }) => {
             onChange={(e) => {
               setTags(e.target.value);
             }}
+            value={tags}
           />
         </div>
 
@@ -95,6 +113,7 @@ const InventoryForm = ({ addInventoryItem, list }) => {
             onChange={(e) => {
               setDate(e.target.value);
             }}
+            value={date}
           />
         </div>
 
@@ -109,6 +128,7 @@ const InventoryForm = ({ addInventoryItem, list }) => {
             onChange={(e) => {
               setImage(e.target.value);
             }}
+            value={image}
           />
         </div>
       </div>
@@ -125,6 +145,7 @@ const InventoryForm = ({ addInventoryItem, list }) => {
             onChange={(e) => {
               setDescription(e.target.value);
             }}
+            value={description}
           />
         </div>
       </div>

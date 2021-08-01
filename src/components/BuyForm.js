@@ -1,26 +1,40 @@
 import { useState } from "react";
+import firebase from "firebase/app";
 
-const BuyForm = ({ addBuyItem, list }) => {
+const BuyForm = () => {
   const [title, setTitle] = useState("");
-  const [quantity, setQuantity] = useState("n/a");
-  const [location, setLocation] = useState("n/a");
-  const [tags, setTags] = useState("n/a");
-  const [person, setPerson] = useState("n/a");
-  const [image, setImage] = useState("n/a");
-  const [description, setDescription] = useState("n/a");
+  const [quantity, setQuantity] = useState("0");
+  const [location, setLocation] = useState("");
+  const [tags, setTags] = useState("");
+  const [person, setPerson] = useState("");
+  const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleClick = (e) => {
     e.preventDefault();
-    addBuyItem({
-      id: Math.random(),
-      title: title,
-      quantity: quantity,
-      location: location,
-      tags: tags,
-      person: person,
-      imageLink: image,
-      description: description,
-    });
+
+    firebase
+      .firestore()
+      .collection("BuyList")
+      .add({
+        title,
+        quantity,
+        location,
+        tags: [tags],
+        person,
+        imageLink: image,
+        description,
+      })
+
+      .then(() => {
+        setTitle("");
+        setPerson("");
+        setQuantity(0);
+        setLocation("");
+        setTags("");
+        setImage("");
+        setDescription("");
+      });
   };
 
   return (
@@ -37,6 +51,7 @@ const BuyForm = ({ addBuyItem, list }) => {
             onChange={(e) => {
               setTitle(e.target.value);
             }}
+            value={title}
             required
           />
         </div>
@@ -52,6 +67,7 @@ const BuyForm = ({ addBuyItem, list }) => {
             onChange={(e) => {
               setQuantity(e.target.value);
             }}
+            value={quantity}
           />
         </div>
 
@@ -66,6 +82,7 @@ const BuyForm = ({ addBuyItem, list }) => {
             onChange={(e) => {
               setLocation(e.target.value);
             }}
+            value={location}
           />
         </div>
       </div>
@@ -82,6 +99,7 @@ const BuyForm = ({ addBuyItem, list }) => {
             onChange={(e) => {
               setTags(e.target.value);
             }}
+            value={tags}
           />
         </div>
 
@@ -96,6 +114,7 @@ const BuyForm = ({ addBuyItem, list }) => {
             onChange={(e) => {
               setPerson(e.target.value);
             }}
+            value={person}
           />
         </div>
 
@@ -110,6 +129,7 @@ const BuyForm = ({ addBuyItem, list }) => {
             onChange={(e) => {
               setImage(e.target.value);
             }}
+            value={image}
           />
         </div>
       </div>
@@ -126,6 +146,7 @@ const BuyForm = ({ addBuyItem, list }) => {
             onChange={(e) => {
               setDescription(e.target.value);
             }}
+            value={description}
           />
         </div>
       </div>

@@ -1,117 +1,95 @@
-import { useState } from "react";
 import AddItemForm from "./components/AddItemForm";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import InventoryList from "./components/InventoryList";
 import BuyList from "./components/BuyList";
 
+import firebase from "firebase/app";
+import "firebase/firestore";
+import React, { useState, useEffect } from "react";
+
+firebase.initializeApp({
+  apiKey: "AIzaSyCcqYWL-FcqBwUG0KP-DUmu6tKQZRFdWMY",
+  authDomain: "food-tracker-2a158.firebaseapp.com",
+  projectId: "food-tracker-2a158",
+  storageBucket: "food-tracker-2a158.appspot.com",
+  messagingSenderId: "242734370264",
+  appId: "1:242734370264:web:e194ec5ba25879226236ad",
+  measurementId: "G-SSZ9G41G5K",
+});
+const firestore = firebase.firestore();
+const firebaseInvList = firestore.collection("InventoryList");
+const firebaseBuyList = firestore.collection("BuyList");
+
+firebaseInvList.get();
+firebaseBuyList.get();
+
 const App = () => {
-  const [inventoryInfo, setInventoryInfo] = useState([
-    {
-      id: Math.random(),
-      title: "a item owned",
-      quantity: "4",
-      location: "outside refridgerator",
-      tags: "food",
-      date: "1-1-22",
-      image: "google.com",
-      description:
-        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-    },
-    {
-      id: Math.random(),
-      title: "b item owned",
-      quantity: "2",
-      location: "inside refridgerator",
-      tags: "drink",
-      date: "2-2-33",
-      image: "google.com",
-      description:
-        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-    },
-    {
-      id: Math.random(),
-      title: "c item owned",
-      quantity: "3",
-      location: "kitchen table",
-      tags: "ramen",
-      date: "3-3-44",
-      image: "google.com",
-      description:
-        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-    },
-  ]);
+  const [inventoryList, setInventoryList] = useState([]);
+  const [buyList, setBuyList] = useState([]);
 
-  const [buyInfo, setBuyInfo] = useState([
-    {
-      id: Math.random(),
-      title: "a item owned",
-      quantity: "4",
-      location: "Walmart",
-      tags: "ramen",
-      person: "Nicole",
-      image: "google.com",
-      description:
-        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-    },
-    {
-      id: Math.random(),
-      title: "b item owned",
-      quantity: "2",
-      location: "Safeway",
-      tags: "food",
-      person: "Michelle",
-      image: "google.com",
-      description:
-        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-    },
-    {
-      id: Math.random(),
-      title: "c item owned",
-      quantity: "3",
-      location: "Costco",
-      tags: "drink",
-      person: "Jacky",
-      image: "google.com",
-      description:
-        "a rnasoei fjsaoeifjseoifsaodlkf sas seoia jso fjsoaifs fjsalefj slfspef isjefp asijfpsojf sepfj sipsof jsof jsaofijs psjf poaskf ope",
-    },
-  ]);
+  useEffect(() => {
+    const unsubscribe = firebase
+      .firestore()
+      .collection("InventoryList")
+      .onSnapshot((snapshot) => {
+        const list = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          date: doc.data().date.toDate().toDateString().substring(4, 15),
+        }));
+        setInventoryList(list);
+      });
+    return () => unsubscribe();
+  }, []);
 
-  const addInventoryItem = (item) => {
-    setInventoryInfo([...inventoryInfo, item]);
-  };
-
-  const addBuyItem = (item) => {
-    setBuyInfo([...buyInfo, item]);
-  };
+  useEffect(() => {
+    const unsubscribe = firebase
+      .firestore()
+      .collection("BuyList")
+      .onSnapshot((snapshot) => {
+        const list = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setBuyList(list);
+      });
+    return () => unsubscribe();
+  }, []);
 
   const removeInvItem = (id) => {
-    const filteredRows = inventoryInfo.filter((row) => {
-      return row.id !== id;
-    });
-    setInventoryInfo(filteredRows);
+    firebaseInvList
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("Document successfully deleted!");
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
   };
 
   const removeBuyItem = (id) => {
-    const filteredRows = buyInfo.filter((row) => {
-      return row.id !== id;
-    });
-    setBuyInfo(filteredRows);
+    firebaseBuyList
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("Document successfully deleted!");
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
   };
 
   return (
     <div>
       <div className="sticky-top">
         <Header />
-        <AddItemForm
-          addInventoryItem={addInventoryItem}
-          addBuyItem={addBuyItem}
-        />
+        <AddItemForm />
       </div>
       <div className="row line-split">
-        <InventoryList rows={inventoryInfo} remove={removeInvItem} />
-        <BuyList rows={buyInfo} remove={removeBuyItem} />
+        <InventoryList rows={inventoryList} remove={removeInvItem} />
+        <BuyList rows={buyList} remove={removeBuyItem} />
       </div>
       <Footer />
     </div>
