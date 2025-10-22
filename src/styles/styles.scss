@@ -1,0 +1,35 @@
+$primary: #d4ecf1;
+$secondary: #edf6f6;
+$danger: #ebbbbb;
+$info: #fdf9f9;
+$success: #e3dcdc;
+$warning: #a5a5a5;
+
+$input-placeholder-color: rgb(202, 202, 202);
+$accordion-icon-width: 0rem;
+
+@import "bootstrap/scss/bootstrap";
+
+.line-split > div + div {
+  border-left: 1px solid black;
+}
+
+.add-item-form {
+  padding: 3%;
+  border-bottom: 2px solid;
+}
+
+.question-border {
+  border: 1px solid rgb(161, 157, 157);
+}
+
+.grid-text {
+  font-weight: 215;
+  margin-bottom: 4px;
+  font-size: 18px;
+}
+
+.footer {
+  height: 64px;
+  background-color: #f8e8b9;
+}
